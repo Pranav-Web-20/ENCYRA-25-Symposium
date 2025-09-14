@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ENCYRA'25</title>
+  <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      /* Color palette — change to match your logo colors */
+      --bg:#071129;       /* deep navy */
+      --panel:#0b2238;    /* slightly lighter */
+      --accent:#00ffd5;   /* neon cyan */
+      --accent-2:#ff4ecf; /* neon magenta */
+      --muted:#9fb0c8;
+      --glass: rgba(255,255,255,0.04);
+      --card:#0f2a3f;
+      --comic-font: 'Luckiest Guy', cursive;
+      --ui-font: 'Roboto', sans-serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;padding:0;
+      font-family:var(--ui-font);
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(0,255,213,0.04), transparent),
+                  radial-gradient(800px 500px at 90% 90%, rgba(255,78,207,0.03), transparent),
+                  var(--bg);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      overflow-x:hidden;
+    }
+
+    /* NAV */
+    .nav{
+      display:flex;align-items:center;justify-content:space-between;
+      gap:1rem;padding:12px 20px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      position:sticky;top:0;backdrop-filter: blur(6px);z-index:30;border-bottom:1px solid rgba(255,255,255,0.03);
+    }
+    .nav-left, .nav-right{display:flex;align-items:center;gap:18px}
+    .nav a{color:var(--muted);text-decoration:none;font-weight:600}
+    .nav a:hover{color:var(--accent);transform:translateY(-2px)}
+
+    /* Event title on right */
+    .event-title{font-family:var(--comic-font);font-size:1.15rem;color:var(--accent);letter-spacing:1px}
+
+    /* Responsive: nav items left and event title right already */
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;padding:36px 6vw;align-items:center}
+    @media (max-width:900px){.hero{grid-template-columns:1fr;padding:28px 4vw}}
+    @media (max-width:600px){.hero{grid-template-columns:1fr;gap:14px}}
+
+    .hero-left{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      padding:22px;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,0.6);
+      position:relative;overflow:hidden;
+    }
+    .logo-row{display:flex;align-items:center;gap:18px}
+    .logo-row img{width:110px;height:110px;object-fit:cover;border-radius:12px;border:3px solid rgba(255,255,255,0.04)}
+    .logo-name{display:flex;flex-direction:column}
+    .logo-name h1{font-family:var(--comic-font);margin:0;color:var(--accent);font-size:2rem}
+    .logo-name p{margin:4px 0 0;color:var(--muted)}
+
+    /* Countdown */
+    .countdown{margin-top:18px;display:flex;gap:12px;flex-wrap:wrap}
+    .cd-item{background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));padding:16px;border-radius:10px;min-width:92px;text-align:center;border:1px solid rgba(255,255,255,0.03)}
+    .cd-item .num{font-size:1.6rem;font-weight:700;color:var(--accent)}
+    .cd-item .label{font-size:0.8rem;color:var(--muted);margin-top:4px}
+
+    /* Right panel — animated comic-style circuit board */
+    .hero-right{display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center}
+    .artboard{width:100%;height:320px;border-radius:14px;background:linear-gradient(120deg,#071129 0%, #071a2a 100%);box-shadow:inset 0 -30px 80px rgba(0,0,0,0.6);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,0.03)}
+    .circuit{position:absolute;inset:0;opacity:0.14;background-image:radial-gradient(circle at 20% 20%, rgba(0,255,213,0.06), transparent 2px), linear-gradient(90deg, transparent 30%, rgba(255,78,207,0.02));background-size:400px 200px}
+    .glow{position:absolute;right:-120px;top:-80px;width:360px;height:360px;border-radius:50%;filter:blur(36px);background:radial-gradient(circle, rgba(0,255,213,0.16), transparent 40%)}
+    .floating-code{position:absolute;left:16px;bottom:18px;font-family:monospace;font-size:12px;color:rgba(255,255,255,0.08)}
+
+    /* Sections */
+    .section{padding:28px 6vw}
+    .section .title{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .section h2{margin:0;font-family:var(--comic-font);color:var(--accent)}
+    .section p.lead{margin:6px 0 18px;color:var(--muted)}
+
+    /* Cards grid */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:600px){.cards{grid-template-columns:1fr}}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+      border-radius:12px;padding:20px;height:200px;position:relative;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,0.03);
+      transition:transform .33s cubic-bezier(.2,.9,.2,1), box-shadow .33s;
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 18px 60px rgba(0,0,0,0.6)}
+
+    /* Cover illustration area */
+    .card .cover{position:absolute;inset:0;background-size:cover;background-position:center;border-radius:12px;filter:contrast(.95) saturate(1.05);}
+    .card .overlay {background: transparent;}
+
+
+    /* Title shows only on hover */
+    .card .title{
+      position:absolute;left:16px;bottom:16px;font-weight:800;color:white;font-family:var(--comic-font);font-size:1.05rem;opacity:0;transform:translateY(6px);transition:all .28s ease;
+      text-shadow:0 6px 20px rgba(0,0,0,0.6)
+    }
+    .card:hover .title{opacity:1;transform:translateY(0)}
+
+    /* subtle cyber icons */
+    .card .chip{position:absolute;right:12px;top:12px;width:54px;height:54px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;font-family:monospace;color:var(--muted);font-size:12px}
+
+    /* Modal */
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
+    .modal-backdrop.open{opacity:1;pointer-events:auto}
+    .modal {width: min(880px,95%);background: rgba(15, 42, 63, 0.95);border-radius: 12px;padding: 20px;border: 1px solid rgba(255,255,255,0.04);box-shadow: 0 20px 80px rgba(0,0,0,0.7);}
+
+    .modal h3{margin-top:0;color:var(--accent)}
+    .modal .cols{display:grid;grid-template-columns:1fr 320px;gap:18px}
+    @media (max-width:800px){.modal .cols{grid-template-columns:1fr}}
+    .modal .rules{background:var(--glass);padding:12px;border-radius:8px}
+    .modal .register{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:14px;border-radius:8px;color:#04111a;font-weight:700;text-align:center}
+
+    /* Contact list */
+    .contacts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    @media (max-width:1000px){.contacts{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:600px){.contacts{grid-template-columns:1fr}}
+    .contact-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+    .person{display:flex;gap:12px;align-items:center}
+    .person img{width:44px;height:44px;border-radius:8px;object-fit:cover}
+    .person .meta{font-size:0.9rem}
+    .person .meta .role{font-weight:700;color:var(--accent-2)}
+
+    /* Footer */
+    footer{padding:22px 6vw;color:var(--muted);font-size:0.9rem;display:flex;justify-content:space-between;align-items:center}
+
+    /* small helpers */
+    .muted{color:var(--muted)}
+    button.btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 12px;border-radius:8px;color:var(--muted);cursor:pointer}
+    button.primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#04111a;font-weight:700}
+
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-left">
+      <a href="#home">Home</a>
+      <a href="#events">Events</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+    <div class="nav-right">
+      <div class="event-title">ENCYRA'25</div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-left">
+        <div class="logo-row">
+          <!-- Replace 'assets/logo.png' with the uploaded logo file name -->
+          <img src="assets/logo.jpg" alt="Event Logo" id="eventLogo" onerror="this.style.opacity=.5">
+          <div class="logo-name">
+            <h1 id="siteName">ENCYRA'25</h1>
+            <p class="muted">A Symposium conducted by Department of CSE (Cyber Security)</p>
+          </div>
+        </div>
+
+        <div class="countdown" aria-live="polite" style="margin-top:18px">
+          <div class="cd-item"><div class="num" id="days">--</div><div class="label">Days</div></div>
+          <div class="cd-item"><div class="num" id="hours">--</div><div class="label">Hours</div></div>
+          <div class="cd-item"><div class="num" id="mins">--</div><div class="label">Minutes</div></div>
+          <div class="cd-item"><div class="num" id="secs">--</div><div class="label">Seconds</div></div>
+        </div>
+
+        <p class="lead muted" style="margin-top:14px">Join us for a full day of challenges, Choose a track below and click any event card for details & registration.</p>
+
+      </div>
+        </div>
+    </section>
+
+    <section id="events" class="section">
+      <div class="title"><h2>Events</h2></div>
+      <p class="lead">Click the event for full details, rules and registration.</p>
+
+      <h3 style="color:var(--accent);font-family:var(--comic-font);margin-top:8px">Technical Events</h3>
+      <div class="cards" id="techCards" style="margin-top:12px"></div>
+
+      <h3 style="color:var(--accent);font-family:var(--comic-font);margin-top:26px">Non-Technical Events</h3>
+      <div class="cards" id="nontechCards" style="margin-top:12px"></div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="title"><h2>Contact Us</h2></div>
+      <p class="lead">Who to reach for help, coordination and patronage.</p>
+
+      <div class="contacts">
+        <div class="contact-card">
+          <h4>Chief Patron</h4>
+          <div class="person"><div class="meta"><div class="role">Dr. Nalini M</div><div class="muted">HOD</div></div></div>
+        </div>
+        <div class="contact-card">
+          <h4>Event Coordinator</h4>
+          <div class="person" style="margin-top:8px"><div class="meta"><div class="role">Aravinth Kumar R</div><div class="muted">Assistant Professor</div></div></div>
+        </div>
+        <div class="contact-card">
+          <h4>Student Coordinators</h4>
+          <div class="person" style="margin-top:8px"><div class="meta"><div class="role">Pranav V</div><div class="muted">+91 9080389220</div></div></div>
+          <div class="person" style="margin-top:10px"><div class="meta"><div class="role">Bagatheeshwar A</div><div class="muted">+91 8608560756</div></div></div>
+          <div class="person" style="margin-top:8px"><div class="meta"><div class="role">Divya Lakshmi G</div></div></div>
+          <div class="person" style="margin-top:8px"><div class="meta"><div class="role">Sandhiya P</div></div></div>
+        </div>
+        <div class="contact-card">
+          <h4>Help Desk</h4>
+          <div class="person" style="margin-top:8px"><div class="meta"><div class="role">Help Center</div><div class="muted">+91 9080389220</div></div></div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <div>Copyright © <span id="year"></span> ENCYRA'25</div>
+    <div class="muted">Made by Pranav V</div>
+  </footer>
+
+  <!-- Modal (hidden) -->
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button style="float:right;background:transparent;border:none;color:var(--muted);font-size:18px;" onclick="closeModal()">✕</button>
+      <h3 id="modalTitle">Event Title</h3>
+      <div class="cols">
+        <div>
+          <p id="modalDesc">Full description goes here. Explain how to play, format and expected outcomes.</p>
+          <div style="margin-top:12px" class="rules">
+            <h4>Rules & How to Play</h4>
+            <ul id="modalRules"></ul>
+          </div>
+        </div>
+        <div>
+          <div class="register" id="modalReg">Register Now</div>
+          <div style="margin-top:12px;padding:10px;background:var(--glass);border-radius:8px">
+            <strong>Details</strong>
+            <p class="muted" id="modalMeta" style="margin:6px 0 0"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Set year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Countdown target: change the date/time below to the event start date
+    const eventDate = new Date('2025-09-26T09:00:00');
+
+    function updateCountdown(){
+      const now = new Date();
+      const diff = Math.max(0, eventDate - now);
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor(diff / (1000*60*60) % 24);
+      const mins = Math.floor(diff / (1000*60) % 60);
+      const secs = Math.floor(diff / 1000 % 60);
+      document.getElementById('days').textContent = String(days).padStart(2,'0');
+      document.getElementById('hours').textContent = String(hours).padStart(2,'0');
+      document.getElementById('mins').textContent = String(mins).padStart(2,'0');
+      document.getElementById('secs').textContent = String(secs).padStart(2,'0');
+    }
+    updateCountdown();setInterval(updateCountdown,1000);
+
+    const technicalEvents = [
+      {
+        id:'',title:'Transcribe',img:'assets/trans.jpg',
+        desc:'Showcase your research and creativity by presenting innovative ideas through posters in this engaging competition.',
+        rules:['Event Type: Technical + Fun (Team-Based)','Team Size: 3 members per team','Total Rounds: 3 exciting challenges!'],
+        meta:'Prizes & certificates for winners and participants',
+        regLink:'https://docs.google.com/forms/d/e/1FAIpQLSdUgMpcYhv9MRtBlLrIZH-TJU0zBIA2sw6ie4IpWPKlEjPNww/viewform?usp=header'
+      },
+      {
+        id:'',title:'Quantix',img:'assets/quantix.jpg',
+        desc:'A fun-filled technical team challenge combining coding, creativity, and problem-solving across three exciting rounds.',
+        rules:['Team of max 3 members','No automated attacks against organizer servers','Follow the code of conduct'],
+        meta:'Prizes & certificates for winners and participants',
+        regLink:'https://docs.google.com/forms/d/e/1FAIpQLSdZq5boEJbANIu_yRb476fYHAlo4oN2br0rDGruyXfpvz2NWw/viewform?usp=header'
+      },
+      {
+        id:'',title:'Capture The Flag (CTF)',img:'assets/ctf.jpg',
+        desc:'Compete in an adrenaline-packed CTF to crack challenges, capture flags, and showcase your ultimate cybersecurity skills.',
+        rules:['Team of max 3 members','No automated attacks against organizer servers','Follow the code of conduct'],
+        meta:'Prizes & certificates for winners and participants',
+        regLink:'https://docs.google.com/forms/d/e/1FAIpQLScZahL0XMuFy9IakskhAaQ26IYBpUnBt1c6-0KICTt-YCKQKA/viewform?usp=header'
+      }
+    ];
+
+    const nonTechnicalEvents = [
+      {
+        id:'', 
+        title:'Tune Fest',
+        img:'assets/tune.jpg',
+        desc:'A fun-filled music contest with 4 exciting rounds! Open for individuals or teams (2–3 members).',
+        rules:[
+          'Round 1: Reverse Guessing – Identify songs played in reverse (10 songs, 25 mins)',
+          'Round 2: Pixel Play – Guess songs from pixelated images (10 songs, 25 mins)',
+          'Round 3: Incomplete Lyrics – Fill missing lyrics (10 snippets, 30 mins)',
+          'Round 4: Mashup Mania – Identify songs in mashups (5 mashups, 20 mins)'
+        ],
+        meta:'Prizes & certificates for winners and participants',
+        regLink:'https://docs.google.com/forms/d/e/1FAIpQLSesknvuaQPeG4D8D6RbJV_PVJTAbxyvr_FNl96O8F2a0zOo6A/viewform?usp=header'
+      },
+      {
+        id:'', 
+        title:'Volleymania',
+        img:'assets/volley.jpg',
+        desc:'Team-based volleyball tournament with 6 players on court and up to 2 substitutes.',
+        rules:['Standard volleyball rules','Knockout/league format',],
+        meta:'Prizes & certificates for winners and participants',
+        regLink:'https://docs.google.com/forms/d/e/1FAIpQLScK6E8UayVMJFRmxtfzqZASealq7Xtw3MHmiDeArgaLB1GFDA/viewform?usp=header'
+}
+
+    ];
+
+    // Helper to create cards
+    function createCard(ev){
+      const div = document.createElement('div');
+      div.className='card';
+      div.setAttribute('tabindex','0');
+      div.innerHTML = `
+        <div class="cover" style="background-image:url('${ev.img}')"></div>
+        <div class="overlay"></div>
+        <div class="chip">${ev.id.toUpperCase()}</div>
+        <div class="title">${ev.title}</div>
+      `;
+      // click opens modal
+      div.addEventListener('click',()=>openModal(ev));
+      div.addEventListener('keydown',(e)=>{ if(e.key==='Enter') openModal(ev); });
+      return div;
+    }
+
+    const techContainer = document.getElementById('techCards');
+    const nontechContainer = document.getElementById('nontechCards');
+    technicalEvents.forEach(e=>techContainer.appendChild(createCard(e)));
+    nonTechnicalEvents.forEach(e=>nontechContainer.appendChild(createCard(e)));
+
+    // Modal handlers
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    function openModal(ev){
+      document.getElementById('modalTitle').textContent = ev.title;
+      document.getElementById('modalDesc').textContent = ev.desc;
+      const rulesEl = document.getElementById('modalRules'); rulesEl.innerHTML = '';
+      (ev.rules||[]).forEach(r=>{const li=document.createElement('li');li.textContent=r;rulesEl.appendChild(li)});
+      document.getElementById('modalMeta').textContent = ev.meta || '';
+      const reg = document.getElementById('modalReg');
+      reg.textContent = 'Register';
+      reg.onclick = ()=>{ window.open(ev.regLink || '#','_blank') };
+      modalBackdrop.classList.add('open'); modalBackdrop.setAttribute('aria-hidden','false');
+    }
+    function closeModal(){ modalBackdrop.classList.remove('open'); modalBackdrop.setAttribute('aria-hidden','true'); }
+    modalBackdrop.addEventListener('click',(e)=>{ if(e.target===modalBackdrop) closeModal(); });
+
+    // Smooth scroll
+    function scrollToSection(id){ document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'}) }
+    window.scrollToSection = scrollToSection;
+
+    // Small accessibility: close modal with ESC
+    window.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeModal(); });
+
+  </script>
+</body>
+</html>
