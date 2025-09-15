@@ -82,31 +82,88 @@
     .section p.lead{margin:6px 0 18px;color:var(--muted)}
 
     /* Cards grid */
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-    @media (max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:600px){.cards{grid-template-columns:1fr}}
-
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
-      border-radius:12px;padding:20px;height:200px;position:relative;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,0.03);
-      transition:transform .33s cubic-bezier(.2,.9,.2,1), box-shadow .33s;
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
-    .card:hover{transform:translateY(-8px);box-shadow:0 18px 60px rgba(0,0,0,0.6)}
+    @media (max-width: 1000px) {
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.02));
+      border-radius: 12px;
+      padding: 20px;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      transition: transform .33s cubic-bezier(.2, .9, .2, 1), box-shadow .33s;
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 18px 60px rgba(0, 0, 0, 0.6);
+    }
 
     /* Cover illustration area */
-    .card .cover{position:absolute;inset:0;background-size:cover;background-position:center;border-radius:12px;filter:contrast(.95) saturate(1.05);}
-    .card .overlay {background: transparent;}
-
-
-    /* Title shows only on hover */
-    .card .title{
-      position:absolute;left:16px;bottom:16px;font-weight:800;color:white;font-family:var(--comic-font);font-size:1.05rem;opacity:0;transform:translateY(6px);transition:all .28s ease;
-      text-shadow:0 6px 20px rgba(0,0,0,0.6)
+    .card .cover {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      filter: contrast(.95) saturate(1.05);
     }
-    .card:hover .title{opacity:1;transform:translateY(0)}
+    .card .overlay {
+      background: transparent;
+    }
+
+    /* Title is always visible */
+    .card .title {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  font-weight: 800;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;
+  opacity: 1; /* Always visible */
+  transform: translateY(0);
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+
+  /* Added background shade */
+  background: rgba(0, 0, 0, 0.6); /* Black shade */
+  padding: 6px 10px;              /* Space around text */
+  border-radius: 6px;             /* Smooth edges */
+}
+
+
 
     /* subtle cyber icons */
-    .card .chip{position:absolute;right:12px;top:12px;width:54px;height:54px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;font-family:monospace;color:var(--muted);font-size:12px}
+    .card .chip {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      width: 54px;
+      height: 54px;
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: monospace;
+      color: var(--muted);
+      font-size: 12px;
+    }
 
     /* Modal */
     .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:60;opacity:0;pointer-events:none;transition:opacity .18s}
@@ -120,14 +177,52 @@
     .modal .register{background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:14px;border-radius:8px;color:#04111a;font-weight:700;text-align:center}
 
     /* Contact list */
-    .contacts{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-    @media (max-width:1000px){.contacts{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:600px){.contacts{grid-template-columns:1fr}}
-    .contact-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-    .person{display:flex;gap:12px;align-items:center}
-    .person img{width:44px;height:44px;border-radius:8px;object-fit:cover}
-    .person .meta{font-size:0.9rem}
-    .person .meta .role{font-weight:700;color:var(--accent-2)}
+    .contacts {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+    @media (max-width: 1000px) {
+      .contacts {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .contacts {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), rgba(255, 255, 255, 0.02));
+      padding: 16px; /* slightly more padding */
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .person {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .person img {
+      width: 50px;   /* slightly bigger image */
+      height: 50px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .person .meta {
+      font-size: 1rem; /* increased from 0.9rem */
+    }
+
+    .person .meta .role {
+      font-weight: 700;
+      font-size: 1.05rem; /* role stands out more */
+      color: var(--accent-2);
+    }
+
 
     /* Footer */
     footer{padding:22px 6vw;color:var(--muted);font-size:0.9rem;display:flex;justify-content:space-between;align-items:center}
@@ -194,12 +289,12 @@
 
       <div class="contacts">
         <div class="contact-card">
-          <h4>Chief Patron</h4>
-          <div class="person"><div class="meta"><div class="role">Dr. Nalini M</div><div class="muted">HOD</div></div></div>
+          <h4>Convenor</h4>
+          <div class="person"><div class="meta"><div class="role">Dr. Nalini M</div><div class="muted">HOD / CSE (Cyber Security)</div></div></div>
         </div>
         <div class="contact-card">
           <h4>Event Coordinator</h4>
-          <div class="person" style="margin-top:8px"><div class="meta"><div class="role">Aravinth Kumar R</div><div class="muted">Assistant Professor</div></div></div>
+          <div class="person" style="margin-top:8px"><div class="meta"><div class="role">Aravinth Kumar R</div><div class="muted">Assistant Professor / CSE (Cyber Security)</div></div></div>
         </div>
         <div class="contact-card">
           <h4>Student Coordinators</h4>
@@ -219,7 +314,7 @@
 
   <footer>
     <div>Copyright © <span id="year"></span> ENCYRA'25</div>
-    <div class="muted">Made by Pranav V</div>
+    <div class="muted">Dev by Pranav V</div>
   </footer>
 
   <!-- Modal (hidden) -->
@@ -238,7 +333,7 @@
         <div>
           <div class="register" id="modalReg">Register Now</div>
           <div style="margin-top:12px;padding:10px;background:var(--glass);border-radius:8px">
-            <strong>Details</strong>
+            <strong>Rewards</strong>
             <p class="muted" id="modalMeta" style="margin:6px 0 0"></p>
           </div>
         </div>
@@ -271,7 +366,7 @@
       {
         id:'',title:'Techscribe',img:'assets/trans.jpg',
         desc:'Showcase your research and creativity by presenting innovative ideas through posters in this engaging competition.',
-        rules:['Event Type: Technical + Fun (Team-Based)','Team Size: 2 members per team','Total Rounds: 3 exciting challenges!'],
+        rules:['Event Type: Technical + Fun (Team-Based)','Team Size: 2 members per team','Total Rounds: 2 exciting challenges!'],
         meta:'Prizes & certificates for winners and participants',
         regLink:'https://docs.google.com/forms/d/e/1FAIpQLSdUgMpcYhv9MRtBlLrIZH-TJU0zBIA2sw6ie4IpWPKlEjPNww/viewform?usp=header'
       },
@@ -285,7 +380,7 @@
       {
         id:'',title:'Capture The Flag (CTF)',img:'assets/ctf.jpg',
         desc:'Compete in an adrenaline-packed CTF to crack challenges, capture flags, and showcase your ultimate cybersecurity skills.',
-        rules:['Team of max 3 members','No automated attacks against organizer servers','Bring your own laptops'],
+        rules:['Team of max 3 members','No automated attacks against organizer servers','Follow the code of conduct'],
         meta:'Prizes & certificates for winners and participants',
         regLink:'https://docs.google.com/forms/d/e/1FAIpQLScZahL0XMuFy9IakskhAaQ26IYBpUnBt1c6-0KICTt-YCKQKA/viewform?usp=header'
       }
@@ -310,8 +405,8 @@
         id:'', 
         title:'Volleymania',
         img:'assets/volley.jpg',
-        desc:'Team-based volleyball tournament with 6 players on court and up to 2 substitutes.',
-        rules:['Standard volleyball rules','Knockout','Decision: Umpire\'s call'],
+        desc:'Team-based volleyball tournament with 3 players on court and no substitute.',
+        rules:['Free Registration',' Standard Volleyball rules','Knockout Match','Decision: Umpire\'s call'],
         meta:'Prizes & certificates for winners and participants',
         regLink:'https://docs.google.com/forms/d/e/1FAIpQLScK6E8UayVMJFRmxtfzqZASealq7Xtw3MHmiDeArgaLB1GFDA/viewform?usp=header'
 }
@@ -366,8 +461,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
